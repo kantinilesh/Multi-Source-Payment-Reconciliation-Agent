@@ -1,29 +1,28 @@
 import React from 'react';
 
 export default function MetricCard({ label, value, sub, icon: Icon, accent = 'blue' }) {
-  const accentMap = {
-    green:  { color: 'var(--accent-green)', glow: 'var(--accent-green-glow)' },
-    amber:  { color: 'var(--accent-amber)', glow: 'var(--accent-amber-glow)' },
-    rose:   { color: 'var(--accent-rose)',   glow: 'var(--accent-rose-glow)' },
-    blue:   { color: 'var(--accent-blue)',   glow: 'var(--accent-blue-glow)' },
-    purple: { color: 'var(--accent-purple)', glow: 'var(--accent-purple-glow)' },
+  const accentColors = {
+    green:  { color: 'var(--semantic-success)', bg: 'var(--semantic-success-subtle)' },
+    amber:  { color: 'var(--semantic-warning)', bg: 'var(--semantic-warning-subtle)' },
+    rose:   { color: 'var(--semantic-danger)',  bg: 'var(--semantic-danger-subtle)' },
+    blue:   { color: 'var(--accent-primary)',  bg: 'var(--accent-primary-subtle)' },
+    purple: { color: '#8B5CF6',                bg: 'rgba(139, 92, 246, 0.1)' },
   };
 
-  const a = accentMap[accent] || accentMap.blue;
+  const a = accentColors[accent] || accentColors.blue;
 
   return (
-    <div
-      className="metric-card animate-in"
-      style={{ '--metric-accent': a.color, '--metric-accent-glow': a.glow }}
-    >
-      <div className="metric-label">{label}</div>
+    <div className="metric-card">
+      <div className="metric-header">
+        <span className="metric-label">{label}</span>
+        {Icon && (
+          <div style={{ width: 26, height: 26, borderRadius: 'var(--radius-xs)', background: a.bg, color: a.color, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Icon size={14} />
+          </div>
+        )}
+      </div>
       <div className="metric-value">{value}</div>
       {sub && <div className="metric-sub">{sub}</div>}
-      {Icon && (
-        <div className="metric-icon">
-          <Icon size={18} />
-        </div>
-      )}
     </div>
   );
 }
