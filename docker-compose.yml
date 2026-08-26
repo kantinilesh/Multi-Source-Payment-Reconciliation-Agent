@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: recon-postgres
+    environment:
+      POSTGRES_DB: recon_db
+      POSTGRES_USER: recon_user
+      POSTGRES_PASSWORD: recon_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - recon_pg_data:/var/lib/postgresql/data
+
+volumes:
+  recon_pg_data:

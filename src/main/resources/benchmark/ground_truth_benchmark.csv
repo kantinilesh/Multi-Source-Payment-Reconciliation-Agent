@@ -1,0 +1,61 @@
+gateway_ref,expected_status,expected_exception_category,scenario_category,description
+GW-BM-001,RECONCILED,NONE,EXACT_MATCH,Exact 3-way match across GW Bank and Ledger
+GW-BM-002,RECONCILED,NONE,EXACT_MATCH,Exact 3-way match across GW Bank and Ledger
+GW-BM-003,RECONCILED,NONE,EXACT_MATCH,Exact 3-way match across GW Bank and Ledger
+GW-BM-004,RECONCILED,NONE,EXACT_MATCH,Exact 3-way match across GW Bank and Ledger
+GW-BM-005,RECONCILED,NONE,EXACT_MATCH,Exact 3-way match across GW Bank and Ledger
+GW-BM-006,RECONCILED,NONE,EXACT_MATCH,Exact 3-way match across GW Bank and Ledger
+GW-BM-007,RECONCILED,NONE,EXACT_MATCH,Exact 3-way match across GW Bank and Ledger
+GW-BM-008,RECONCILED,NONE,EXACT_MATCH,Exact 3-way match across GW Bank and Ledger
+GW-BM-009,RECONCILED,NONE,EXACT_MATCH,Exact 3-way match across GW Bank and Ledger
+GW-BM-010,RECONCILED,NONE,EXACT_MATCH,Exact 3-way match across GW Bank and Ledger
+GW-BM-011,RECONCILED,NONE,FEE_ADJUSTED,Gross 2500 minus fee 75 equals bank net 2425
+GW-BM-012,RECONCILED,NONE,FEE_ADJUSTED,Gross 3200 minus fee 96 equals bank net 3104
+GW-BM-013,RECONCILED,NONE,FEE_ADJUSTED,Gross 600 minus fee 18 equals bank net 582
+GW-BM-014,RECONCILED,NONE,FEE_ADJUSTED,Gross 1100 minus fee 33 equals bank net 1067
+GW-BM-015,RECONCILED,NONE,FEE_ADJUSTED,Gross 4000 minus fee 120 equals bank net 3880
+GW-BM-016,RECONCILED,NONE,FEE_ADJUSTED,Gross 950 minus fee 28.5 equals bank net 921.5
+GW-BM-017,RECONCILED,NONE,FEE_ADJUSTED,Gross 1850 minus fee 55.5 equals bank net 1794.5
+GW-BM-018,RECONCILED,NONE,FEE_ADJUSTED,Gross 2700 minus fee 81 equals bank net 2619
+GW-BM-019,RECONCILED,NONE,FEE_ADJUSTED,Gross 1350 minus fee 40.5 equals bank net 1309.5
+GW-BM-020,RECONCILED,NONE,FEE_ADJUSTED,Gross 3500 minus fee 105 equals bank net 3395
+GW-BM-021,RECONCILED,NONE,ID_DRIFT,Bank ref uses GW-BM-021 prefix variant instead of SET-BM-021
+GW-BM-022,RECONCILED,NONE,ID_DRIFT,Bank ref uses GW-BM-022 prefix variant
+GW-BM-023,RECONCILED,NONE,ID_DRIFT,Bank ref uses GW-BM-023 prefix variant
+GW-BM-024,RECONCILED,NONE,ID_DRIFT,Bank ref uses GW-BM-024 prefix variant
+GW-BM-025,RECONCILED,NONE,ID_DRIFT,Bank ref uses GW-BM-025 prefix variant
+GW-BM-026,RECONCILED,NONE,ID_DRIFT,Bank ref uses GW-BM-026 prefix variant
+GW-BM-027,RECONCILED,NONE,ID_DRIFT,Bank ref uses GW-BM-027 prefix variant
+GW-BM-028,RECONCILED,NONE,ID_DRIFT,Bank ref uses GW-BM-028 prefix variant
+GW-BM-029,RECONCILED,NONE,SETTLEMENT_LAG,Settlement date is 4 days after transaction time
+GW-BM-030,RECONCILED,NONE,SETTLEMENT_LAG,Settlement date is 4 days after transaction time
+GW-BM-031,RECONCILED,NONE,SETTLEMENT_LAG,Settlement date is 4 days after transaction time
+GW-BM-032,RECONCILED,NONE,SETTLEMENT_LAG,Settlement date is 4 days after transaction time
+GW-BM-033,RECONCILED,NONE,SETTLEMENT_LAG,Settlement date is 4 days after transaction time
+GW-BM-034,RECONCILED,NONE,SETTLEMENT_LAG,Settlement date is 4 days after transaction time
+GW-BM-035,EXCEPTION,MISSING_IN_BANK_FILE,MISSING_BANK,Transaction present in gateway and ledger but absent in bank file
+GW-BM-036,EXCEPTION,MISSING_IN_BANK_FILE,MISSING_BANK,Transaction present in gateway and ledger but absent in bank file
+GW-BM-037,EXCEPTION,MISSING_IN_BANK_FILE,MISSING_BANK,Transaction present in gateway and ledger but absent in bank file
+GW-BM-038,EXCEPTION,MISSING_IN_BANK_FILE,MISSING_BANK,Transaction present in gateway and ledger but absent in bank file
+GW-BM-039,EXCEPTION,MISSING_IN_BANK_FILE,MISSING_BANK,Transaction present in gateway and ledger but absent in bank file
+GW-BM-040,EXCEPTION,MISSING_IN_BANK_FILE,MISSING_BANK,Transaction present in gateway and ledger but absent in bank file
+GW-BM-041,EXCEPTION,MISSING_IN_LEDGER,MISSING_LEDGER,Transaction present in gateway and bank but absent in ledger file
+GW-BM-042,EXCEPTION,MISSING_IN_LEDGER,MISSING_LEDGER,Transaction present in gateway and bank but absent in ledger file
+GW-BM-043,EXCEPTION,MISSING_IN_LEDGER,MISSING_LEDGER,Transaction present in gateway and bank but absent in ledger file
+GW-BM-044,EXCEPTION,MISSING_IN_LEDGER,MISSING_LEDGER,Transaction present in gateway and bank but absent in ledger file
+GW-BM-045,EXCEPTION,MISSING_IN_LEDGER,MISSING_LEDGER,Transaction present in gateway and bank but absent in ledger file
+GW-BM-046,EXCEPTION,MISSING_IN_LEDGER,MISSING_LEDGER,Transaction present in gateway and bank but absent in ledger file
+GW-BM-047,EXCEPTION,AMOUNT_MISMATCH_BEYOND_TOLERANCE,AMOUNT_MISMATCH,Bank settled amount 1500 differs from gateway gross 2000 beyond fee tolerance
+GW-BM-048,EXCEPTION,AMOUNT_MISMATCH_BEYOND_TOLERANCE,AMOUNT_MISMATCH,Bank settled amount 1100 differs from gateway gross 1500 beyond fee tolerance
+GW-BM-049,EXCEPTION,AMOUNT_MISMATCH_BEYOND_TOLERANCE,AMOUNT_MISMATCH,Bank settled amount 2000 differs from gateway gross 3000 beyond fee tolerance
+GW-BM-050,EXCEPTION,AMOUNT_MISMATCH_BEYOND_TOLERANCE,AMOUNT_MISMATCH,Bank settled amount 900 differs from gateway gross 1200 beyond fee tolerance
+GW-BM-051,EXCEPTION,AMOUNT_MISMATCH_BEYOND_TOLERANCE,AMOUNT_MISMATCH,Bank settled amount 1800 differs from gateway gross 2500 beyond fee tolerance
+GW-BM-052,EXCEPTION,AMOUNT_MISMATCH_BEYOND_TOLERANCE,AMOUNT_MISMATCH,Bank settled amount 600 differs from gateway gross 900 beyond fee tolerance
+GW-BM-053,EXCEPTION,DUPLICATE_DETECTED,DUPLICATE,Duplicate gateway transactions GW-BM-053 and GW-BM-053B with same amount 900
+GW-BM-053B,EXCEPTION,DUPLICATE_DETECTED,DUPLICATE,Duplicate gateway transaction candidate
+GW-BM-055,EXCEPTION,MISSING_IN_BANK_FILE,MISSING_BANK,Transaction absent in bank settlement file
+GW-BM-056,EXCEPTION,MISSING_IN_BANK_FILE,MISSING_BANK,Transaction absent in bank settlement file
+GW-BM-057,RECONCILED,NONE,REFUND,Symmetric refund status across gateway and ledger
+GW-BM-058,RECONCILED,NONE,REFUND,Symmetric refund status across gateway and ledger
+GW-BM-059,EXCEPTION,MISSING_IN_BANK_FILE,MISSING_BANK,Gateway and ledger charge missing from bank settlement
+GW-BM-060,EXCEPTION,MISSING_IN_BANK_FILE,MISSING_BANK,Gateway and ledger charge missing from bank settlement

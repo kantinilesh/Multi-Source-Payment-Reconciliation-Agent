@@ -1,0 +1,75 @@
+spring:
+  application:
+    name: recon-backend
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/recon_db
+    username: ${DB_USERNAME:recon_user}
+    password: ${DB_PASSWORD:recon_pass}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      # Phase 2: let Hibernate create the schema from entities for fast iteration.
+      # Switch to 'validate' + Flyway/Liquibase migrations before anything resembling
+      # production use - ddl-auto: update is a deliberate MVP-speed tradeoff, not a
+      # long-term choice.
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 15MB
+
+server:
+  port: 8080
+
+# Matching engine tuning knobs - Section 3.6 "Rules Engine" of the blueprint.
+# Deliberately externalized (not hardcoded) so these can be tuned live in a demo.
+recon:
+  matching:
+    # Fee tolerance: gateway fee as a percentage of the gross gateway amount.
+    # Anything within [min, max] % is considered a plausible gateway fee.
+    fee-tolerance-pct-min: 0.5
+    fee-tolerance-pct-max: 4.0
+    # Maximum days between gateway transaction timestamp and bank settlement date.
+    settlement-lag-days-max: 5
+    # Minimum Jaro-Winkler similarity (or numeric-core match) for reference signals.
+    id-similarity-threshold: 0.6
+    # --- Scoring weights (must sum to 110; each signal contributes independently) ---
+    score:
+      # 40 pts: all 3 sources share the same numeric reference core (strongest signal)
+      exact-id-weight: 40
+      # 20 pts: at least 2 sources share numeric core (variant IDs like GW-83921 / PAY-83921)
+      ref-similarity-weight: 20
+      # 20 pts: all amounts are exactly equal (gross amounts)
+      amount-exact-weight: 20
+      # 15 pts: bank_amount ≈ gateway_amount − fee (within fee-tolerance band)
+      fee-adjusted-weight: 15
+      # 10 pts: all timestamps fall within settlement-lag window
+      timestamp-weight: 10
+      # 5 pts: payment statuses are compatible (e.g. SUCCESS+PAID+CREDITED)
+      status-compat-weight: 5
+    # --- Decision thresholds ---
+    # Score >= reconciled-threshold → RECONCILED
+    reconciled-threshold: 70
+    # reconciled-threshold > score >= review-threshold → REVIEW_REQUIRED
+    review-threshold: 40
+    # score < review-threshold → EXCEPTION
+  ai:
+    confidence-auto-accept-threshold: 0.85
+    provider-base-url: ${AI_PROVIDER_BASE_URL:https://api.anthropic.com}
+    api-key: ${AI_PROVIDER_API_KEY:}
+    model: claude-sonnet-4-6
+    max-tokens: 1000
+
+logging:
+  level:
+    com.razorpay.buildathon.recon: INFO
+

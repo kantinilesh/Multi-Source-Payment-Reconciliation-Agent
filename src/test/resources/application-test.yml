@@ -1,0 +1,43 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        jdbc:
+          time_zone: UTC
+
+recon:
+  matching:
+    fee-tolerance-pct-min: 0.5
+    fee-tolerance-pct-max: 4.0
+    settlement-lag-days-max: 5
+    id-similarity-threshold: 0.6
+    score:
+      exact-id-weight: 40
+      ref-similarity-weight: 20
+      amount-exact-weight: 20
+      fee-adjusted-weight: 15
+      timestamp-weight: 10
+      status-compat-weight: 5
+    reconciled-threshold: 70
+    review-threshold: 40
+  ai:
+    confidence-auto-accept-threshold: 0.85
+    provider-base-url: https://api.anthropic.com
+    api-key: ""
+    model: claude-sonnet-4-6
+    max-tokens: 1000
+    mock-mode: true
+
+logging:
+  level:
+    com.razorpay.buildathon.recon: WARN
