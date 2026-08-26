@@ -9,6 +9,7 @@ import TransactionsPage from './pages/TransactionsPage';
 import AiInvestigationPage from './pages/AiInvestigationPage';
 import ExceptionsPage from './pages/ExceptionsPage';
 import AuditPage from './pages/AuditPage';
+import AdminPage from './pages/AdminPage';
 
 function ProtectedLayout({ children, runId, runs, onRunChange }) {
   const { user } = useAuth();
@@ -53,6 +54,7 @@ export default function App() {
                 <Route path="/ai-investigation" element={<AiInvestigationPage runId={runId} />} />
                 <Route path="/exceptions" element={<ExceptionsPage runId={runId} />} />
                 <Route path="/audit" element={<AuditPage runId={runId} />} />
+                <Route path="/admin" element={<AdminPage />} />
               </Routes>
             </ProtectedLayout>
           }

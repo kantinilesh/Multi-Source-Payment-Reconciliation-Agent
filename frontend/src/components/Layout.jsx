@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
   Upload, LayoutDashboard, ArrowLeftRight, Brain,
-  AlertTriangle, ClipboardList, Database, LogOut, UserCheck
+  AlertTriangle, ClipboardList, Database, LogOut, UserCheck, ShieldAlert
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -13,6 +13,7 @@ const navItems = [
   { to: '/ai-investigation', icon: Brain,        label: 'AI Investigation' },
   { to: '/exceptions',    icon: AlertTriangle,   label: 'Exception Queue' },
   { to: '/audit',         icon: ClipboardList,   label: 'Audit Trail' },
+  { to: '/admin',         icon: ShieldAlert,     label: 'Admin Governance' },
 ];
 
 export default function Layout({ children, runId, runs, onRunChange }) {
