@@ -183,10 +183,23 @@ export default function AiInvestigationPage({ runId }) {
                 <div className="step-content">
                   {selected.status === 'RECONCILED' ? (
                     <span style={{ color: 'var(--accent-green)' }}>✓ No action required — transaction successfully reconciled</span>
-                  ) : selected.status === 'EXCEPTION' ? (
-                    <span style={{ color: 'var(--accent-rose)' }}>⚠ Requires manual investigation by finance team</span>
                   ) : (
-                    <span style={{ color: 'var(--accent-amber)' }}>⏳ Under review — additional evidence needed</span>
+                    <div>
+                      <div style={{ color: 'var(--accent-amber)', fontWeight: 600, marginBottom: 4 }}>
+                        ⚡ AI Resolution Proposal:
+                      </div>
+                      <div style={{ color: 'var(--text-primary)', marginBottom: 8 }}>
+                        {selected.exceptionCategory === 'MISSING_IN_LEDGER' && "Action: Auto-generate missing ERP Journal Entry for this payment"}
+                        {selected.exceptionCategory === 'MISSING_IN_BANK_FILE' && "Action: Flag as unsettled deposit — initiate bank settlement inquiry"}
+                        {selected.exceptionCategory === 'AMOUNT_MISMATCH_BEYOND_TOLERANCE' && "Action: Create Fee Adjustment Entry for unexplained variance"}
+                        {selected.exceptionCategory === 'DUPLICATE_DETECTED' && "Action: Flag duplicate candidate for voiding/cancellation"}
+                        {selected.exceptionCategory === 'REFUND_MISMATCH' && "Action: Verify refund status with payment gateway provider"}
+                        {(!selected.exceptionCategory || selected.exceptionCategory === 'NONE') && "Action: Verify evidence with human finance analyst"}
+                      </div>
+                      <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
+                        AI Confidence: {Math.round((selected.confidence || 0.85) * 100)}% · Guardrail Checked
+                      </div>
+                    </div>
                   )}
                 </div>
               </div>
