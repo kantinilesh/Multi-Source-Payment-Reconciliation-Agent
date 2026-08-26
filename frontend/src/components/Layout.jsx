@@ -2,8 +2,9 @@ import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
   Upload, LayoutDashboard, ArrowLeftRight, Brain,
-  AlertTriangle, ClipboardList, Database
+  AlertTriangle, ClipboardList, Database, LogOut, UserCheck
 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 const navItems = [
   { to: '/',              icon: Upload,          label: 'Upload & Run' },
@@ -15,6 +16,14 @@ const navItems = [
 ];
 
 export default function Layout({ children, runId, runs, onRunChange }) {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
   return (
     <div className="app-layout">
       <aside className="sidebar">
@@ -38,6 +47,38 @@ export default function Layout({ children, runId, runs, onRunChange }) {
         </nav>
 
         <div className="sidebar-footer">
+          {user && (
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '8px 12px',
+              background: 'var(--bg-card)',
+              border: '1px solid var(--border-card)',
+              borderRadius: 'var(--radius-sm)',
+              marginBottom: 8
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, overflow: 'hidden' }}>
+                <UserCheck size={16} style={{ color: 'var(--accent-green)', flexShrink: 0 }} />
+                <div style={{ overflow: 'hidden' }}>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    {user.name}
+                  </div>
+                  <div style={{ fontSize: 10, color: 'var(--text-muted)' }}>
+                    {user.role}
+                  </div>
+                </div>
+              </div>
+              <button
+                onClick={handleLogout}
+                title="Sign Out"
+                style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: 4 }}
+              >
+                <LogOut size={14} />
+              </button>
+            </div>
+          )}
+
           <div className="run-selector">
             <Database size={14} />
             <select
