@@ -1,0 +1,25 @@
+============================================================
+                  RAZORPAY PAYMENT RECEIPT
+============================================================
+Merchant Name:   Acme Tech Solutions India Pvt Ltd
+Payment ID:      pay_RZP_001
+Order ID:        order_RZP_001
+Date & Time:     10 Feb 2024, 09:15:00 IST
+Payment Method:  Visa Credit Card (**** 4242)
+
+------------------------------------------------------------
+Transaction Details:
+------------------------------------------------------------
+Gross Amount:    ₹ 1,500.00
+Gateway Fee:     ₹ 35.40
+GST (18%):       ₹ 5.40
+Net Amount:      ₹ 1,464.60
+Status:          CAPTURED / SUCCESSFUL
+
+Customer Name:   Rahul Sharma
+Customer Email:  rahul.sharma@example.com
+
+Reference Note:  REC-RZP-001
+============================================================
+Thank you for your payment! Powered by Razorpay
+============================================================

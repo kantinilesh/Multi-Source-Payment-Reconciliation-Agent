@@ -31,8 +31,8 @@ public class BillNormalizationService {
 
     private static final Logger log = LoggerFactory.getLogger(BillNormalizationService.class);
 
-    private static final Pattern INVOICE_REF_PATTERN = Pattern.compile("(?i)(INV|BILL|REC|REF|VCH)[-:\\s#]*([A-Z0-9_-]+)");
-    private static final Pattern AMOUNT_PATTERN = Pattern.compile("(?i)(AMOUNT|TOTAL|NET|DUE|RS|₹)[-:\\s]*([0-9,]+\\.[0-9]{2}|[0-9,]+)");
+    private static final Pattern INVOICE_REF_PATTERN = Pattern.compile("(?i)(INV|BILL|REC|REF|VCH|SET|order|pay|UTR)[-:\\s#]*([A-Z0-9_-]+)");
+    private static final Pattern AMOUNT_PATTERN = Pattern.compile("(?i)(AMOUNT|TOTAL|NET|GROSS|SETTLED|RS|₹)[-:\\s]*([0-9,]+\\.[0-9]{2}|[0-9,]+)");
 
     /**
      * Parses custom invoice/bill files (CSV or unstructured bill text).

@@ -1,0 +1,21 @@
+============================================================
+              HDFC BANK - SETTLEMENT DEPOSIT SLIP
+============================================================
+Branch:          Koramangala, Bengaluru
+UTR Number:      UTR9821001
+Settlement Date: 12-FEB-2024
+Credit Account:  CA-9876543210 (Acme Tech Solutions)
+
+------------------------------------------------------------
+Settlement Summary:
+------------------------------------------------------------
+Source Reference: SET-RZP-001
+Remitter Name:   RAZORPAY SOFTWARE PVT LTD
+Settled Amount:  ₹ 1,464.60
+Deposit Type:    NEFT Merchant Settlement
+Status:          CREDITED TO ACCOUNT
+
+Reference Note:  SET-RZP-001
+============================================================
+System Generated Deposit Advice - HDFC Bank Ltd.
+============================================================

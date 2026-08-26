@@ -1,0 +1,18 @@
+============================================================
+                MERCHANT POS TERMINAL RECEIPT
+============================================================
+Terminal ID:     TID-884920
+Voucher No:      VCH-2024-001
+Order Reference: PAY-RZP-001
+Date & Time:     10/02/2024 09:15:00
+
+------------------------------------------------------------
+Sale Amount:     ₹ 1,500.00
+Account Head:    Sales Income
+Status:          APPROVED / PAID
+
+Card Type:       VISA DEBIT
+Auth Code:       AUTH-991823
+============================================================
+Merchant Copy - Retain for Audit
+============================================================
