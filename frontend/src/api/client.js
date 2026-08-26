@@ -73,3 +73,20 @@ export async function getEvaluation(runId) {
 export async function runBenchmark() {
   return request('/evaluation/run-benchmark', { method: 'POST' });
 }
+
+// ── Auth ──
+export async function apiLogin(email, password) {
+  return request('/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password })
+  });
+}
+
+export async function apiSignup(email, password, name) {
+  return request('/auth/signup', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password, name })
+  });
+}

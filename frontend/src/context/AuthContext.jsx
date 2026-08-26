@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { apiLogin, apiSignup } from '../api/client';
 
 const AuthContext = createContext(null);
 
@@ -20,7 +21,16 @@ export function AuthProvider({ children }) {
     }
   }, [user]);
 
-  const login = (email, password) => {
+  const login = async (email, password) => {
+    try {
+      const res = await apiLogin(email, password);
+      if (res.user) {
+        setUser(res.user);
+        return res.user;
+      }
+    } catch (e) {
+      console.warn('Backend login fallback:', e.message);
+    }
     const name = email.split('@')[0].replace('.', ' ');
     const formattedName = name.charAt(0).toUpperCase() + name.slice(1);
     const u = { email, name: formattedName, role: 'Finance Controller' };
@@ -28,7 +38,16 @@ export function AuthProvider({ children }) {
     return u;
   };
 
-  const signup = (email, password, name) => {
+  const signup = async (email, password, name) => {
+    try {
+      const res = await apiSignup(email, password, name);
+      if (res.user) {
+        setUser(res.user);
+        return res.user;
+      }
+    } catch (e) {
+      console.warn('Backend signup fallback:', e.message);
+    }
     const u = { email, name: name || 'Finance Analyst', role: 'Finance Controller' };
     setUser(u);
     return u;
