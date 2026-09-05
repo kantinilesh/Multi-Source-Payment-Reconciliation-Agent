@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Upload, FileSpreadsheet, CheckCircle2, Loader2, Zap, FileText, Sparkles, ArrowRight } from 'lucide-react';
+import { Upload, FileSpreadsheet, CheckCircle2, Loader2, Zap, FileText, Sparkles, ArrowRight, Database, Brain, Cpu } from 'lucide-react';
 import { uploadFiles, triggerReconciliation } from '../api/client';
 
 function UploadZone({ label, hint, file, onFile, accept = ".csv" }) {
@@ -48,6 +48,51 @@ function UploadZone({ label, hint, file, onFile, accept = ".csv" }) {
       </div>
       <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
         {file ? `${(file.size / 1024).toFixed(1)} KB · Validated` : hint}
+      </div>
+    </div>
+  );
+}
+
+/* Animated Pipeline Step Indicator */
+function PipelineProgress({ step }) {
+  const steps = [
+    { label: 'Files Ingested', icon: <Upload size={12} />, stepNum: 1 },
+    { label: 'Normalized', icon: <Database size={12} />, stepNum: 2 },
+    { label: 'Rules Engine', icon: <Cpu size={12} />, stepNum: 3 },
+    { label: 'AI Reasoning', icon: <Brain size={12} />, stepNum: 5 },
+  ];
+
+  return (
+    <div className="surface-card shimmer" style={{ marginBottom: 24, padding: 20 }}>
+      <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 16 }}>
+        Pipeline Execution Sequence
+      </div>
+      <div className="pipeline-steps">
+        {steps.map((s, i) => {
+          const isComplete = step >= s.stepNum;
+          const isActive = !isComplete && (
+            (s.stepNum === 1 && step >= 0) ||
+            (s.stepNum === 2 && step >= 1) ||
+            (s.stepNum === 3 && step >= 2) ||
+            (s.stepNum === 5 && step >= 3)
+          );
+
+          return (
+            <React.Fragment key={i}>
+              <div className={`pipeline-step ${isComplete ? 'complete' : isActive ? 'active' : ''}`}>
+                <div className="pipeline-step-icon">
+                  {isComplete ? <CheckCircle2 size={14} /> : s.icon}
+                </div>
+                <span style={{ fontSize: 12, fontWeight: isComplete || isActive ? 600 : 400, whiteSpace: 'nowrap' }}>
+                  {s.label}
+                </span>
+              </div>
+              {i < steps.length - 1 && (
+                <div className={`pipeline-connector ${isComplete ? 'complete' : isActive ? 'active' : ''}`} />
+              )}
+            </React.Fragment>
+          );
+        })}
       </div>
     </div>
   );
@@ -173,31 +218,8 @@ VCH-2024-010,PAY-RZP-010,5300.00,PAID,2024-02-10,Sales Income`;
         </div>
       )}
 
-      {/* Progress Sequence Animation */}
-      {step > 0 && (
-        <div className="surface-card" style={{ marginBottom: 24, padding: 20 }}>
-          <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: 12 }}>
-            Pipeline Execution Sequence
-          </div>
-          <div style={{ display: 'flex', gap: 16, alignItems: 'center', fontSize: 13 }}>
-            <span style={{ color: step >= 1 ? 'var(--semantic-success)' : 'var(--text-muted)' }}>
-              {step >= 1 ? '✓' : '○'} Files Ingested
-            </span>
-            <span>→</span>
-            <span style={{ color: step >= 2 ? 'var(--semantic-success)' : 'var(--text-muted)' }}>
-              {step >= 2 ? '✓' : '○'} Transactions Normalized
-            </span>
-            <span>→</span>
-            <span style={{ color: step >= 3 ? 'var(--semantic-success)' : 'var(--text-muted)' }}>
-              {step >= 3 ? '✓' : '○'} Rules Matching Engine
-            </span>
-            <span>→</span>
-            <span style={{ color: step >= 5 ? 'var(--semantic-success)' : 'var(--text-muted)' }}>
-              {step >= 5 ? '✓' : '○'} AI Exception Reasoning
-            </span>
-          </div>
-        </div>
-      )}
+      {/* Animated Pipeline Progress */}
+      {step > 0 && <PipelineProgress step={step} />}
 
       {error && (
         <div className="surface-card" style={{ marginBottom: 20, borderColor: 'var(--semantic-danger)', color: 'var(--semantic-danger)', fontSize: 13 }}>
@@ -212,7 +234,7 @@ VCH-2024-010,PAY-RZP-010,5300.00,PAID,2024-02-10,Sales Income`;
           onClick={handleUpload}
         >
           {uploading || reconciling ? (
-            <><Loader2 size={16} className="spinner" /> Reconciling Pipeline...</>
+            <><div className="spinner" style={{ width: 16, height: 16, borderWidth: 2 }} /> Reconciling Pipeline...</>
           ) : (
             <><Zap size={16} /> Execute Reconciliation</>
           )}
@@ -226,7 +248,7 @@ VCH-2024-010,PAY-RZP-010,5300.00,PAID,2024-02-10,Sales Income`;
       </div>
 
       {uploadResult && (
-        <div className="surface-card" style={{ marginTop: 24 }}>
+        <div className="surface-card slide-up" style={{ marginTop: 24, opacity: 0 }}>
           <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 12 }}>
             Execution Results Summary
           </div>

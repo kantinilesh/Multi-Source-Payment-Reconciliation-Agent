@@ -123,7 +123,11 @@ export default function AiInvestigationPage({ runId }) {
                 disabled={explaining}
                 onClick={() => handleAiExplain(selected)}
               >
-                {explaining ? <><div className="spinner" /> Analyzing...</> : <><Zap size={13} /> Re-analyze with AI</>}
+                {explaining ? (
+                  <><Brain size={13} className="ai-analyzing-pulse" /> Analyzing...</>
+                ) : (
+                  <><Zap size={13} /> Re-analyze with AI</>
+                )}
               </button>
             </div>
 
@@ -131,8 +135,9 @@ export default function AiInvestigationPage({ runId }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               {/* Step 1: System Evidence */}
               <div style={{ background: 'var(--bg-input)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', padding: 14 }}>
-                <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', color: 'var(--accent-primary)', marginBottom: 8 }}>
-                  Step 1 · System Evidence Across Sources
+                <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', color: 'var(--accent-primary)', marginBottom: 8, display: 'flex', alignItems: 'center' }}>
+                  <span className="ai-step-badge step-1">1</span>
+                  System Evidence Across Sources
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, fontSize: 12 }}>
                   <div>
@@ -155,8 +160,9 @@ export default function AiInvestigationPage({ runId }) {
 
               {/* Step 2: AI Reasoning */}
               <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', padding: 14 }}>
-                <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', color: '#8B5CF6', marginBottom: 6 }}>
-                  Step 2 · AI Agent Reasoning Summary
+                <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', color: '#8B5CF6', marginBottom: 6, display: 'flex', alignItems: 'center' }}>
+                  <span className="ai-step-badge step-2">2</span>
+                  AI Agent Reasoning Summary
                 </div>
                 <div style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.6 }}>
                   {selected.reasoning || 'No AI reasoning text generated yet. Click "Re-analyze with AI" to trigger.'}
@@ -166,8 +172,9 @@ export default function AiInvestigationPage({ runId }) {
               {/* Step 3: Exception Taxonomy Category */}
               {selected.exceptionCategory && selected.exceptionCategory !== 'NONE' && (
                 <div style={{ background: 'var(--semantic-danger-subtle)', border: '1px solid rgba(239, 68, 68, 0.2)', borderRadius: 'var(--radius-sm)', padding: 12 }}>
-                  <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', color: 'var(--semantic-danger)', marginBottom: 2 }}>
-                    Step 3 · Financial Exception Taxonomy
+                  <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', color: 'var(--semantic-danger)', marginBottom: 2, display: 'flex', alignItems: 'center' }}>
+                    <span className="ai-step-badge step-3">3</span>
+                    Financial Exception Taxonomy
                   </div>
                   <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--semantic-danger)' }}>
                     {selected.exceptionCategory.replace(/_/g, ' ')}
@@ -177,8 +184,9 @@ export default function AiInvestigationPage({ runId }) {
 
               {/* Step 4 & 5: Decision & Recommended Action */}
               <div style={{ background: 'var(--bg-input)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', padding: 14 }}>
-                <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', color: 'var(--semantic-success)', marginBottom: 6 }}>
-                  Steps 4 & 5 · Decision & AI Resolution Action Proposal
+                <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', color: 'var(--semantic-success)', marginBottom: 6, display: 'flex', alignItems: 'center' }}>
+                  <span className="ai-step-badge step-4">4</span>
+                  Decision & AI Resolution Action Proposal
                 </div>
                 <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 4 }}>
                   {selected.status === 'RECONCILED' ? (

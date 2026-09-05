@@ -34,7 +34,7 @@ export default function AdminPage() {
           <h2>Admin Control Panel & System Governance</h2>
           <p>Manage user authorizations, access controls, and live matching engine parameters</p>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'var(--accent-blue-glow)', color: 'var(--accent-blue)', padding: '6px 12px', borderRadius: 'var(--radius-sm)', fontSize: 12, border: '1px solid var(--border-subtle)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'var(--accent-primary-subtle)', color: 'var(--accent-primary)', padding: '6px 12px', borderRadius: 'var(--radius-sm)', fontSize: 12, border: '1px solid var(--border-accent)' }}>
           <ShieldAlert size={14} /> Admin Privileges Enabled
         </div>
       </div>
@@ -142,7 +142,7 @@ export default function AdminPage() {
             </div>
 
             {saveSuccess && (
-              <div style={{ color: 'var(--accent-green)', fontSize: 12, fontWeight: 600 }}>
+              <div style={{ color: 'var(--semantic-success)', fontSize: 12, fontWeight: 600 }}>
                 ✓ Live Engine Configuration Saved & Applied!
               </div>
             )}
