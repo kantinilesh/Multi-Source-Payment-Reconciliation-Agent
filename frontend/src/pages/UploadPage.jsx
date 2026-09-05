@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Upload, FileSpreadsheet, CheckCircle2, Loader2, Zap, FileText, Sparkles, ArrowRight, Database, Brain, Cpu } from 'lucide-react';
+import { Upload, FileSpreadsheet, CheckCircle2, Loader2, Zap, FileText, Sparkles, ArrowRight, Database, Brain, Cpu, AlertTriangle } from 'lucide-react';
 import { uploadFiles, triggerReconciliation } from '../api/client';
+import { CLEAN_DATASET, EXCEPTION_DATASET } from '../data/sampleDatasets';
 
 function UploadZone({ label, hint, file, onFile, accept = ".csv" }) {
   const inputRef = useRef();
@@ -141,58 +142,41 @@ export default function UploadPage({ onRunCreated }) {
     }
   };
 
-  const handleLoadEnterpriseSample = () => {
-    const gwCsv = `payment_id,order_id,amount,fee,tax,status,timestamp,payment_method,card_network
-pay_RZP_001,order_RZP_001,1500.00,35.40,5.40,SUCCESS,2024-02-10T09:15:00Z,card,Visa
-pay_RZP_002,order_RZP_002,4500.00,106.20,16.20,SUCCESS,2024-02-10T09:22:00Z,upi,UPI
-pay_RZP_003,order_RZP_003,890.00,20.98,3.20,SUCCESS,2024-02-10T09:40:00Z,netbanking,HDFC
-pay_RZP_004,order_RZP_004,12500.00,295.00,45.00,SUCCESS,2024-02-10T10:05:00Z,card,MasterCard
-pay_RZP_005,order_RZP_005,3200.00,75.52,11.52,SUCCESS,2024-02-10T10:30:00Z,upi,UPI
-pay_RZP_006,order_RZP_006,6700.00,158.12,24.12,SUCCESS,2024-02-10T11:00:00Z,card,Amex
-pay_RZP_007,order_RZP_007,2100.00,49.56,7.56,SUCCESS,2024-02-10T11:45:00Z,upi,UPI
-pay_RZP_008,order_RZP_008,9400.00,221.84,33.84,SUCCESS,2024-02-10T12:15:00Z,netbanking,ICICI
-pay_RZP_009,order_RZP_009,1800.00,42.48,6.48,REFUNDED,2024-02-10T13:00:00Z,upi,UPI
-pay_RZP_010,order_RZP_010,5300.00,125.08,19.08,SUCCESS,2024-02-10T14:10:00Z,card,Visa`;
-
-    const bkCsv = `utr_number,reference_note,settled_amount,settlement_date,bank_name
-UTR9821001,SET-RZP-001,1464.60,2024-02-12T00:00:00Z,HDFC Bank
-UTR9821002,SET-RZP-002,4393.80,2024-02-12T00:00:00Z,HDFC Bank
-UTR9821003,SET-RZP-003,869.02,2024-02-12T00:00:00Z,HDFC Bank
-UTR9821004,SET-RZP-004,12205.00,2024-02-12T00:00:00Z,HDFC Bank
-UTR9821005,SET-RZP-005,3124.48,2024-02-12T00:00:00Z,HDFC Bank
-UTR9821006,SET-RZP-006,6541.88,2024-02-12T00:00:00Z,HDFC Bank
-UTR9821007,SET-RZP-007,2050.44,2024-02-12T00:00:00Z,HDFC Bank
-UTR9821008,SET-RZP-008,9178.16,2024-02-12T00:00:00Z,HDFC Bank
-UTR9821009,SET-RZP-009,1757.52,2024-02-12T00:00:00Z,HDFC Bank
-UTR9821010,SET-RZP-010,5174.92,2024-02-12T00:00:00Z,HDFC Bank`;
-
-    const lgCsv = `voucher_no,order_ref,amount,status,date,account_head
-VCH-2024-001,PAY-RZP-001,1500.00,PAID,2024-02-10,Sales Income
-VCH-2024-002,PAY-RZP-002,4500.00,PAID,2024-02-10,Sales Income
-VCH-2024-003,PAY-RZP-003,890.00,PAID,2024-02-10,Sales Income
-VCH-2024-004,PAY-RZP-004,12500.00,PAID,2024-02-10,Sales Income
-VCH-2024-005,PAY-RZP-005,3200.00,PAID,2024-02-10,Sales Income
-VCH-2024-006,PAY-RZP-006,6700.00,PAID,2024-02-10,Sales Income
-VCH-2024-007,PAY-RZP-007,2100.00,PAID,2024-02-10,Sales Income
-VCH-2024-008,PAY-RZP-008,9400.00,PAID,2024-02-10,Sales Income
-VCH-2024-009,PAY-RZP-009,1800.00,REFUNDED,2024-02-10,Sales Returns
-VCH-2024-010,PAY-RZP-010,5300.00,PAID,2024-02-10,Sales Income`;
-
-    setGatewayFile(new File([gwCsv], "razorpay_gateway_export.csv", { type: "text/csv" }));
-    setBankFile(new File([bkCsv], "hdfc_bank_settlement.csv", { type: "text/csv" }));
-    setLedgerFile(new File([lgCsv], "tally_erp_ledger.csv", { type: "text/csv" }));
+  const loadDataset = (type) => {
+    const ds = type === 'CLEAN' ? CLEAN_DATASET : EXCEPTION_DATASET;
+    setTab('CSV');
+    setGatewayFile(new File([ds.gateway], "razorpay_gateway_export.csv", { type: "text/csv" }));
+    setBankFile(new File([ds.bank], "hdfc_bank_settlement.csv", { type: "text/csv" }));
+    setLedgerFile(new File([ds.ledger], "tally_erp_ledger.csv", { type: "text/csv" }));
+    setBillFile(null);
+    setError(null);
   };
 
   return (
     <div className="fade-in">
-      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12 }}>
         <div>
           <h2>Upload & Reconcile</h2>
-          <p>Upload source CSV files or receipt documents to execute multi-source reconciliation</p>
+          <p>Upload multi-source CSV files or documents to execute 3-way automated reconciliation</p>
         </div>
-        <button className="btn btn-secondary btn-sm" onClick={handleLoadEnterpriseSample}>
-          <Sparkles size={14} style={{ color: 'var(--semantic-warning)' }} /> Load Enterprise Datasets
-        </button>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          <button 
+            className="btn btn-secondary btn-sm" 
+            onClick={() => loadDataset('CLEAN')}
+            title="Load 10 records with 100% clean auto-match"
+          >
+            <Sparkles size={14} style={{ color: 'var(--semantic-success)' }} /> Load Clean Dataset (100% Match)
+          </button>
+          <button 
+            className="btn btn-secondary btn-sm" 
+            onClick={() => loadDataset('EXCEPTION')}
+            style={{ borderColor: 'var(--semantic-warning)', background: 'rgba(255, 143, 0, 0.08)' }}
+            title="Load 50 enterprise records with missing bank/ledger, fee drift, and amount mismatches to showcase AI investigation"
+          >
+            <AlertTriangle size={14} style={{ color: 'var(--semantic-warning)' }} /> 
+            <strong>Demo: Exceptions & AI Cases (50 Rows)</strong>
+          </button>
+        </div>
       </div>
 
       <div className="filter-bar" style={{ marginBottom: 20 }}>
