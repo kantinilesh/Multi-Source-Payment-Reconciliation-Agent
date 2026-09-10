@@ -1,12 +1,19 @@
 package com.razorpay.buildathon.recon.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.resource.PathResourceResolver;
+
+import java.io.IOException;
 
 /**
- * Global CORS configuration allowing the Vite dev server (localhost:5173)
- * and production builds to call backend APIs.
+ * Global Web and CORS configuration:
+ * 1. Allows frontend clients (local, preview, and cloud domains) to call backend APIs.
+ * 2. Serves the bundled React SPA from classpath:/static/ with SPA routing fallback.
  */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -14,10 +21,32 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
-                .allowedOrigins("http://localhost:5173", "http://localhost:3000", "http://localhost:8080")
+                .allowedOriginPatterns("*")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true)
                 .maxAge(3600);
     }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/static/")
+                .resourceChain(true)
+                .addResolver(new PathResourceResolver() {
+                    @Override
+                    protected Resource getResource(String resourcePath, Resource location) throws IOException {
+                        Resource requestedResource = location.createRelative(resourcePath);
+                        if (requestedResource.exists() && requestedResource.isReadable()) {
+                            return requestedResource;
+                        }
+                        if (resourcePath.startsWith("api/") || resourcePath.equals("api")) {
+                            return null;
+                        }
+                        Resource index = new ClassPathResource("/static/index.html");
+                        return (index.exists() && index.isReadable()) ? index : null;
+                    }
+                });
+    }
 }
+

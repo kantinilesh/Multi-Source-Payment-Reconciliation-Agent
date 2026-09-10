@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: recon-engine-enterprise
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: SPRING_APPLICATION_NAME
+        value: recon-backend

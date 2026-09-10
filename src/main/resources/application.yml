@@ -10,9 +10,9 @@ spring:
         web-allow-others: true
 
   datasource:
-    url: ${DB_URL:jdbc:h2:mem:recon_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL}
-    username: ${DB_USERNAME:sa}
-    password: ${DB_PASSWORD:}
+    url: ${SPRING_DATASOURCE_URL:${DATABASE_URL:${DB_URL:jdbc:h2:mem:recon_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL}}}
+    username: ${SPRING_DATASOURCE_USERNAME:${DATABASE_USERNAME:${DB_USERNAME:sa}}}
+    password: ${SPRING_DATASOURCE_PASSWORD:${DATABASE_PASSWORD:${DB_PASSWORD:}}}
     driver-class-name: ${DB_DRIVER:org.h2.Driver}
 
   jpa:
@@ -31,7 +31,7 @@ spring:
       max-request-size: 15MB
 
 server:
-  port: 8080
+  port: ${PORT:8080}
 
 # Matching engine tuning knobs - Section 3.6 "Rules Engine" of the blueprint.
 # Deliberately externalized (not hardcoded) so these can be tuned live in a demo.
